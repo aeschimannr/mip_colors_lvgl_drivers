@@ -1,0 +1,25 @@
+void SetButtonState(const char *Params) {
+  if ( !HasParam(Params) ) {
+    Serial.println("Message index not defined");
+    return;
+  }
+
+  size_t buttonKey;
+  if ( !GetParam(Params,buttonKey) || buttonKey>=nBkinkMarineKeyMax ) {
+    Serial.println("Invalid button key index");
+    return;
+  }
+  
+  if ( HasParam(Params) ) {
+    uint32_t Color;
+    if ( !GetParam(Params,Color) || Color>nBlinkMarineColorMax ) {
+      Serial.println("Invalid color");
+      return;
+    }
+    // send command to the blink button
+    N2kSendMessages[MsgIndex].Scheduler.SetPeriod(Period);
+  }
+  Serial.print(N2kSendMessages[MsgIndex].Description);
+  Serial.print("Blink Marine key color is ");
+  Serial.println(N2kSendMessages[MsgIndex].Scheduler.GetPeriod());
+}
